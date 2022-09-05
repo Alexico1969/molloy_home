@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary code</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="scripts.js"></script>
+   
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="top">
+            <div class="top-menu">
+               
+            </div>
+            <h1>Binary code - Explanation</h1>
+            <!-- div id="clock"></div -->
+        </div>
+        <div class="main"> 
+
+            <div class="widget wide">
+                <br>
+                <div>
+                    <img src="img/light_off.png" class="light" id="light0">
+                    <img src="img/light_off.png" class="light" id="light1">
+                    <img src="img/light_off.png" class="light" id="light2">
+                    <img src="img/light_off.png" class="light" id="light3">
+                    <img src="img/light_off.png" class="light" id="light4">
+                    <img src="img/light_off.png" class="light" id="light5">
+                    <img src="img/light_off.png" class="light" id="light6">
+                    <img src="img/light_off.png" class="light" id="light7">
+                </div>
+                <div class="digits">
+                    <img src="img/0.png" class="light" id="digit0">
+                    <img src="img/0.png" class="light" id="digit1">
+                    <img src="img/0.png" class="light" id="digit2">
+                    <img src="img/0.png" class="light" id="digit3">
+                    <img src="img/0.png" class="light" id="digit4">
+                    <img src="img/0.png" class="light" id="digit5">
+                    <img src="img/0.png" class="light" id="digit6">
+                    <img src="img/0.png" class="light" id="digit7">
+                </div>
+                <div class="decimals">
+                    <img src="img/dec_0.png" class="light" id="decimal0">
+                    <img src="img/dec_0.png" class="light" id="decimal1">
+                    <img src="img/dec_0.png" class="light" id="decimal2">
+                    <img src="img/dec_0.png" class="light" id="decimal3">
+                    <img src="img/dec_0.png" class="light" id="decimal4">
+                    <img src="img/dec_0.png" class="light" id="decimal5">
+                    <img src="img/dec_0.png" class="light" id="decimal6">
+                    <img src="img/dec_0.png" class="light" id="decimal7">
+                </div>
+                <div class="binary">
+                    <img src="img/bin_0.png" class="light" id="binary0">
+                    <img src="img/bin_0.png" class="light" id="binary1">
+                    <img src="img/bin_0.png" class="light" id="binary2">
+                    <img src="img/bin_0.png" class="light" id="binary3">
+                    <img src="img/bin_0.png" class="light" id="binary4">
+                    <img src="img/bin_0.png" class="light" id="binary5">
+                    <img src="img/bin_0.png" class="light" id="binary6">
+                    <img src="img/bin_0.png" class="light" id="binary7">
+
+                </div>
+            </div>
+            <div class="widget">
+                <h2>Control Box</h2>
+                <br>
+                <h3>Digital <button id="dig_on">on</button>  <button id="dig_off">off</button></h3>
+                <h3>Decimal <button id="dec_on">on</button>  <button id="dec_off">off</button></h3>
+                <h3>Binary <button id="bin_on">on</button>  <button id="bin_off">off</button></h3>
+                <br><br>
+                <h3><button id="reset">Reset</button></h3>
+            </div>
+          
+
+        </div>
+    </div>
+
+    <script>
+
+        $( document ).ready(function() {
+            $('.digits').hide();
+            $('.decimals').hide();
+            $('.binary').hide();
+        });
+
+        $('#reset').click(
+            function(){
+                location.reload(true);
+            }
+        );
+
+
+        var lights = [0,0,0,0,0,0,0,0];
+
+        function set_digits() {
+            for (var i = 0; i < 8; i++) {
+                var digit = document.getElementById("digit" + i);
+                digit.src = "img/" + lights[i] + ".png";
+            }
+        }
+
+        function set_decimals() {
+            for (var i = 0; i < 8; i++) {
+                var decimal = document.getElementById("decimal" + i);
+                decimal.src = "img/dec_" + lights[i]*(8-i) + ".png";
+            }
+        }
+
+        function set_binary() {
+            for (var i = 0; i < 8; i++) {
+                var binary = document.getElementById("binary" + i);
+                binary.src = "img/bin_" + lights[i]*2**(7-i) + ".png";
+            }
+        }
+
+        $('#dig_on').click(
+            function() {
+                $('.digits').show();
+            }
+        );
+
+        $('#dig_off').click(
+            function() {
+                $('.digits').hide();
+            }
+        );
+
+        $('#dec_on').click(
+            function() {
+                $('.decimals').show();
+            }
+        );
+
+        $('#dec_off').click(
+            function() {
+                $('.decimals').hide();
+            }
+        );
+
+        $('#bin_on').click(
+            function() {
+                $('.binary').show();
+            }
+        );
+
+        $('#bin_off').click(
+            function() {
+                $('.binary').hide();
+            }
+        );
+    
+        $('.light').click(
+            function(){
+                var id = $(this).attr('id');
+                var index = id.substring(5);
+                lights[index] = 1 - lights[index];
+                if (lights[index] == 1){
+                    $(this).attr('src', 'img/light_on.png');
+                } else {
+                    $(this).attr('src', 'img/light_off.png');
+                }
+                console.log(lights);
+                set_digits();
+                set_decimals();
+                set_binary();
+            }
+        );
+
+    </script>
+</body>
