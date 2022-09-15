@@ -13,3 +13,9 @@ function checkTime(i) {
     if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
 }
+
+$('#passlink').click(function(){
+    console.log("Check");
+    var link = $('#link').val(); 
+    window.open('mailto:avanwinkel@molloyhs.org?subject=passlink&body=' + link);
+})
