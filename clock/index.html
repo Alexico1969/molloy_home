@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>AMHS Clock</title>
+    <style>
+        body{
+            font-family: "Montserrat", sans-serif;
+            text-align: center;
+            background-color: #7fabd1;
+        }
+        table{
+            margin: auto;
+            font-size: 150%;
+            border-collapse: collapse;
+        }
+        td{
+            margin: 10px;
+            padding: 10px;
+        }
+        .title{
+            padding: 4px 2px;
+            background-color: black;
+            color: #7fabd1;
+        }
+        .container{
+            text-align: center;
+        }
+        .bold{
+            font-weight: bold;
+        }
+
+        .border{
+            border: 2pt solid black;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="title">
+        <h1>AMHS Clock</h1>
+    </div>
+        <br><br>
+        <table>
+            <tr><td>Current time</td><td><span id="currTime"></span></td></tr>
+            <tr class="bold border"><td>Closing time</td><td><span id="closeTime"></span></td></tr>
+            <tr><td>Ending  time</td><td><span id="endTime"></span></td></tr>
+            <tr></tr>
+            <tr><td></td></tr>
+            <tr><td>Time left</td><td><h2><span id="timeLeft"></span></h2></td></tr>
+
+            <tr><td></td><td><span id="timeBar"></span></td></tr>
+        </table>
+    <div class="container">
+
+
+
+    </div>
+    <script>
+        
+        const startTimes = ["08:00", "08:45", "08:59", "09:44", "10:29", "11:14", "11:59", "12:44", "13:29"]
+        const startTimesUS = ["08:00", "08:45", "08:59", "09:44", "10:29", "11:14", "11:59", "1:44", "2:29"]
+        const closeTimes = ["08:39", "08:53", "09:38", "10:23", "11:08", "11:53", "12:38", "13:23", "14:08"]
+        const closeTimesUS = ["08:39", "08:53", "09:38", "10:23", "11:08", "11:53", "12:38", "1:23", "2:08"]
+        const endTimes = ["08:41", "08:55", "09:40", "10:25", "11:10", "11:55", "12:40", "13:25", "14:10"]
+        const endTimesUS = ["08:41", "08:55", "09:40", "10:25", "11:10", "11:55", "12:40", "1:25", "2:10"]
+        setInterval(updateTimes, 100);
+    
+        function fillUp(input){
+            input = input.toString();
+            if(input.length < 2){
+                output = '0' + input;
+            } else {
+                output = input;
+            }
+            return output;
+        }
+
+        function getEndTime(){
+            var output = 0;
+            var today = new Date();
+            var time = fillUp(today.getHours()) + ":" + fillUp(today.getMinutes());
+            // time = "14:01";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
+            counter = 0
+            if (time > "14:10"){
+                output = 999;
+            } else {
+                    while (time > endTimes[counter]){
+                    counter++;
+                    output = counter;                  
+                }
+            }
+            return output;
+        }
+
+        function timeDiff(first, second){
+            var firstMin = first.substring(3,5);
+            var secondMin = second.substring(3,5);
+            var diff = parseInt(secondMin) - parseInt(firstMin);
+            if (diff < 0){
+                diff = diff + 60;
+            }
+
+            return diff;
+        }
+
+        function toUS(input){
+            output = input;
+            if(input.substring(0,2) == "13"){
+                output = "1" + input.substring(2,5);
+            } else if(input.substring(0,2) == "14"){
+                output = "2" + input.substring(2,5);
+            }
+            return output;
+        }
+
+        function updateTimes(){
+            var today = new Date();
+            var time = fillUp(today.getHours()) + ":" + fillUp(today.getMinutes());
+            // time = "14:01";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
+            $("#currTime").html(toUS(time));
+            var index = getEndTime();
+            if (index == 999){
+                var closeTime = "< N/A >";
+                var endTime = "< N/A >";
+                var timeLeft = "< N/A >";
+            } else {
+                var closeTime = closeTimes[index];
+                var endTime = endTimesUS[index];
+                var timeLeft = timeDiff(time, closeTime) + " min.";
+                closeTime = closeTimesUS[index];
+            }
+            $("#closeTime").html(closeTime);
+            $("#endTime").html(endTime);
+            $("#timeLeft").html(timeLeft);
+            
+        }
+
+
+    </script>
+</body>
+</html>
