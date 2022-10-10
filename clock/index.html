@@ -47,6 +47,10 @@
             text-align: center;
         }
 
+        #msg{
+            color :green;
+        }
+
     </style>
 </head>
 <body>
@@ -62,11 +66,14 @@
             <tr></tr>
             <tr><td></td></tr>
             <tr><td>Time left</td><td><h2><span id="timeLeft"></span></h2></td></tr>
-
-            <tr><td></td><td><span id="timeBar"></span></td></tr>
+            <br>
+            <tr><td></td><td></td></tr>
         </table>
 
-        <br><br><br><br><br><br>
+        <br>
+        <h2><span id="msg"></span></h2>
+        <br><br><br>
+
         <img src="logo_medium.png"/ width="200px" style="opacity: 0.2">
 
 
@@ -76,7 +83,7 @@
         Made by Alex van Winkel
     </div>
     <script>
-        
+        var msg = " ";
         const startTimes = ["08:00", "08:45", "08:59", "09:44", "10:29", "11:14", "11:59", "12:44", "13:29"]
         const startTimesUS = ["08:00", "08:45", "08:59", "09:44", "10:29", "11:14", "11:59", "1:44", "2:29"]
         const closeTimes = ["08:39", "08:53", "09:38", "10:23", "11:08", "11:53", "12:38", "13:23", "14:08"]
@@ -99,7 +106,7 @@
             var output = 0;
             var today = new Date();
             var time = fillUp(today.getHours()) + ":" + fillUp(today.getMinutes());
-            //time = "08:02";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
+            // time = "08:46";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
             counter = 0
             if (time > "14:10" || time < "08:00"){
                 output = 999;
@@ -136,7 +143,7 @@
         function updateTimes(){
             var today = new Date();
             var time = fillUp(today.getHours()) + ":" + fillUp(today.getMinutes());
-            //time = "08:02";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
+            // time = "08:46";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
             $("#currTime").html(toUS(time));
             var index = getEndTime();
             if (index == 999){
@@ -149,10 +156,16 @@
                 var timeLeft = timeDiff(time, closeTime) + " min.";
                 closeTime = closeTimesUS[index];
             }
+            if(time > "08:45" && time < "08:55"){
+                msg = "HOMEROOM";
+            } else {
+                msg = " ";
+            }
+
             $("#closeTime").html(closeTime);
             $("#endTime").html(endTime);
             $("#timeLeft").html(timeLeft);
-            
+            $("#msg").html(msg);
         }
 
 
