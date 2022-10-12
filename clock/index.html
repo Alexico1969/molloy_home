@@ -106,7 +106,7 @@
             var output = 0;
             var today = new Date();
             var time = fillUp(today.getHours()) + ":" + fillUp(today.getMinutes());
-            // time = "08:46";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
+            time = "08:40";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
             counter = 0
             if (time > "14:10" || time < "08:00"){
                 output = 999;
@@ -143,7 +143,7 @@
         function updateTimes(){
             var today = new Date();
             var time = fillUp(today.getHours()) + ":" + fillUp(today.getMinutes());
-            // time = "08:46";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
+            time = "08:40";  // FOR TESTING PURPOSES - TAKE OUT AFTER TESTING
             $("#currTime").html(toUS(time));
             var index = getEndTime();
             if (index == 999){
@@ -153,7 +153,16 @@
             } else {
                 var closeTime = closeTimes[index];
                 var endTime = endTimesUS[index];
-                var timeLeft = timeDiff(time, closeTime) + " min.";
+                var timeLeft = "";
+                console.log("current time: ", time);
+                console.log("close time: ", closeTime);
+                console.log("end time: ", endTime);
+                if (closeTime <= time && time <= endTime){
+                    timeLeft = "0 min.";
+                } else {
+                    timeLeft = timeDiff(time, closeTime) + " min.";
+                }
+                
                 closeTime = closeTimesUS[index];
             }
             if(time > "08:45" && time < "08:55"){
