@@ -150,6 +150,10 @@ input[type='number']{
     margin: 7px;
 }
 
+.round{
+    border-radius: 10%;
+}
+
 #note-area{
     font-size: 18px;
     max-width: 28vw;
