@@ -52,6 +52,14 @@ input[type='number']{
     width: 80px;
 } 
 
+a{
+    color: rgb(67, 233, 254);
+}
+
+a:visited{
+    color: rgb(2, 117, 79);
+}
+
 .container{
     background-image: url("img/binary4a.jpg");
     background-size: cover;
